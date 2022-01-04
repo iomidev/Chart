@@ -24,12 +24,22 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
     const LANG_CHART_LINE_CHART = 'line_chart';
     const LANG_CHART_TYPE = "chart_type";
     const LANG_CHART = "chart";
+    const MIN_VALUE_CHART = "min_value_chart";
+    const MAX_VALUE_CHART = "max_value_chart";
 
     public function getToolsForContextStack(CalledContexts $called_contexts) : array
     {
         global $DIC;
         $tools = [];
         $plugin = new \ilChartPlugin();
+
+        /*var_dump("PLUGINID:" . $plugin->getId());
+        var_dump("CMDCLASS: " . $DIC->ctrl()->getCmdClass());
+        var_dump("CMD: " . $DIC->ctrl()->getCmd());*/
+
+
+
+        //var_dump($DIC->copage()->internal()->data());
 
         if(($plugin->getId() === 'chrt' && ($DIC->ctrl()->getCmdClass() === 'ilchartplugingui' || $DIC->ctrl()->getCmdClass() === 'ilpcpluggedgui') && ($DIC->ctrl()->getCmd() === 'edit' || $DIC->ctrl()->getCmd() === 'insert' || $DIC->ctrl()->getCmd() === 'create'))) {
 
@@ -47,6 +57,7 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
                 ->withContent($l($this->getContent()));
 
             return $tools;
+
         }
         return $tools;
     }
@@ -81,6 +92,10 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
         $selectChartType->setOptions($optionsChart);
         $selectChartType->setValue("1");
         $form->addItem($selectChartType);
+
+        $maxValueChart = new \ilTextInputGUI($pl->txt(self::MAX_VALUE_CHART), "chart_max_value_slate");
+        $maxValueChart->setRequired(false);
+        $form->addItem($maxValueChart);
 
         // Radio buttons for data format
         $radioGroup = new \ilRadioGroupInputGUI("Format", "data_format_slate");

@@ -17,6 +17,7 @@ line_chart#:#Liniediagramm
 pie_chart#:#Tortendiagramm
 chart_title#:#Titel
 chart_type#:#Typ
+max_value_chart#:#Max Wert
 key#:#Value
 value#:#Wert
 number#:#Zahl

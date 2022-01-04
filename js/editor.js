@@ -1,6 +1,6 @@
 window.onload = function() {
 
-    let containers = ['il_prop_cont_chart_title_slate', 'il_prop_cont_chart_type_slate', 'il_prop_cont_data_format_slate', 'il_prop_cont_currency_symbol_slate'];
+    let containers = ['il_prop_cont_chart_title_slate', 'il_prop_cont_chart_type_slate', 'il_prop_cont_data_format_slate', 'il_prop_cont_currency_symbol_slate', 'il_prop_cont_chart_max_value_slate'];
 
     for(let i = 0; i < containers.length; i++){
 
@@ -18,6 +18,8 @@ window.onload = function() {
     }
     setValue(document.getElementById('chart_type_slate'), document.getElementById('chart_type'));
     setValue(document.getElementById('currency_symbol_slate'), document.getElementById('currency_symbol'));
+
+    setValue(document.getElementById('chart_max_value_slate'), document.getElementById('chart_max_value'));
 
     if(document.getElementById('data_format').value === ''){
         document.getElementById('data_format').value = '1';
@@ -37,6 +39,10 @@ window.onload = function() {
 
     document.getElementById("chart_type_slate").addEventListener("change", function(){
         document.getElementById('chart_type').value = getValue(document.getElementById("chart_type_slate"));
+    });
+
+    document.getElementById("chart_max_value_slate").addEventListener("change", function(){
+        document.getElementById('chart_max_value').value = getValue(document.getElementById("chart_max_value_slate"));
     });
 
     document.getElementById('data_format_slate_1').addEventListener("click", function(){

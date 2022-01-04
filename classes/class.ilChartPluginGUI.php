@@ -126,6 +126,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
             $properties = [
                 "chart_title" => $form->getInput("chart_title"),
                 "chart_type" => $form->getInput("chart_type"),
+                "chart_max_value" => $form->getInput("chart_max_value"),
                 "data_format" => $form->getInput("data_format"),
                 "currency_symbol" => $form->getInput("currency_symbol"),
             ];
@@ -297,6 +298,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
             $properties = [];
             $properties["chart_title"] = $form->getInput("chart_title");
             $properties["chart_type"] = $form->getInput("chart_type");
+            $properties["chart_max_value"] = $form->getInput("chart_max_value");
             $properties["data_format"] = $form->getInput("data_format");
             $properties["currency_symbol"] = $form->getInput("currency_symbol");
             $properties = array_merge($properties, $propertiesCategoriesColorsTmp);
@@ -496,6 +498,10 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $titleChart = new ilHiddenInputGUI("chart_type");
         $titleChart->setValue($prop["chart_type"]);
         $form->addItem($titleChart);
+
+        $maxValueChart = new ilHiddenInputGUI("chart_max_value");
+        $maxValueChart->setValue($prop["chart_max_value"]);
+        $form->addItem($maxValueChart);
 
         $titleChart = new ilHiddenInputGUI("data_format");
         $titleChart->setValue($prop["data_format"]);
@@ -931,6 +937,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $tpl->setVariable("CHART_ID", $id);
         $tpl->setVariable("CHART_TITLE", $a_properties['chart_title']);
         $tpl->setVariable("CHART_TYPE", $this->getChartType($a_properties['chart_type']));
+        $tpl->setVariable("CHART_MAX_VALUE", $a_properties['chart_max_value']);
         $tpl->setVariable("CHART_DATA_FORMAT", $a_properties['data_format']);
         $tpl->setVariable("CHART_CURR_SYMBOL", $a_properties['currency_symbol']);
         $tpl->setVariable("TITLE_CATEGORIES", $this->titleCategoryInputFields($a_properties));

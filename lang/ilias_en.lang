@@ -17,6 +17,7 @@ pie_chart#:#Pie Chart
 line_chart#:#Line Chart
 chart_title#:#Title
 chart_type#:#Type
+max_value_chart#:#Max Value
 key#:#Category
 value#:#Value
 number#:#Number

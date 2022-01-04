@@ -4,7 +4,7 @@ let j = 1;
 
 for (let i = 0; i < divClass.length; i++) {
 
-    let title, type, chartId, chartDataFormat, chartCurrencySymbol, categoryDiv, datasetDiv, datasetCount, datasetValueDiv,
+    let title, type, chartId, chartMaxValue, chartDataFormat, chartCurrencySymbol, categoryDiv, datasetDiv, datasetCount, datasetValueDiv,
         colorCategoryDiv, colorDatasetDiv, percentDiv, chartDataSet, chartLabels, canVas, dataTable, thisChart,
         optionsPie, optionsHorizontalBar, optionsBar, optionsLine, symbol;
 
@@ -13,6 +13,7 @@ for (let i = 0; i < divClass.length; i++) {
     title = div[i].chart_title.value;
     type = div[i].chart_type.value;
     chartId = div[i].chart_id.value;
+    chartMaxValue = div[i].chart_max_value.value;
     chartDataFormat = div[i].chart_data_format.value;
     chartCurrencySymbol = div[i].chart_currency_symbol.value;
 
@@ -128,19 +129,19 @@ for (let i = 0; i < divClass.length; i++) {
 
     }else if (type === 'line'){
 
-        optionsLine = getOptionsLine(symbol, title);
+        optionsLine = getOptionsLine(symbol, title, chartMaxValue);
         dataTable = getDataTable(type, chartLabels.labels, datasetForChart, optionsLine);
         thisChart = new Chart(canVas, dataTable);
 
     } else if (type === 'bar') {
 
-        optionsBar = getOptionsVerticalBar(symbol, title);
+        optionsBar = getOptionsVerticalBar(symbol, title, chartMaxValue);
         dataTable = getDataTable(type, chartLabels.labels, datasetForChart, optionsBar);
         thisChart = new Chart(canVas, dataTable);
 
     } else if (type === 'horizontalBar') {
 
-        optionsHorizontalBar = getOptionsHorizontalBar(symbol, title);
+        optionsHorizontalBar = getOptionsHorizontalBar(symbol, title, chartMaxValue);
         dataTable = getDataTable(type, chartLabels.labels, datasetForChart, optionsHorizontalBar);
         thisChart = new Chart(canVas, dataTable);
 
@@ -227,7 +228,7 @@ function getDataTable(typ, labels, datasets, options)  {
     };
 }
 
-function getOptionsVerticalBar(formatter, title)  {
+function getOptionsVerticalBar(formatter, title, maxValue)  {
 
     return {
         plugins: {
@@ -255,9 +256,15 @@ function getOptionsVerticalBar(formatter, title)  {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
+                    suggestedMax: parseInt(maxValue) ? maxValue : 0,
                     callback: function (value) {
                         return value.toLocaleString();
                     }
+                }
+            }],
+            xAxes: [{
+                ticks: {
+                    beginAtZero: true
                 }
             }]
         },
@@ -290,7 +297,7 @@ function getOptionsVerticalBar(formatter, title)  {
     };
 }
 
-function getOptionsHorizontalBar(formatter, title)  {
+function getOptionsHorizontalBar(formatter, title, maxValue)  {
 
     return {
         plugins: {
@@ -318,6 +325,7 @@ function getOptionsHorizontalBar(formatter, title)  {
             xAxes: [{
                 ticks: {
                     beginAtZero: true,
+                    suggestedMax: parseInt(maxValue) ? maxValue : 0,
                     callback: function (value) {
                         return value.toLocaleString();
                     }
@@ -401,7 +409,7 @@ function getOptionsPie(formatter, title)  {
     };
 }
 
-function getOptionsLine(formatter, title)  {
+function getOptionsLine(formatter, title, maxValue)  {
 
     return {
         plugins: {
@@ -429,6 +437,7 @@ function getOptionsLine(formatter, title)  {
             yAxes: [{
                 ticks: {
                     beginAtZero: true,
+                    suggestedMax: parseInt(maxValue) ? maxValue : 0,
                     callback: function (value) {
                         return value.toLocaleString();
                     }
