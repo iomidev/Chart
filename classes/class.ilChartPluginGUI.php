@@ -6,7 +6,6 @@
  *
  * @author KPG <dev@kroepelin-projekte.de>
  * @ilCtrl_isCalledBy ilChartPluginGUI: ilPCPluggedGUI
- * @ilCtrl_isCalledBy ilChartPluginGUI: ilUIPluginRouterGUI
  */
 class ilChartPluginGUI extends ilPageComponentPluginGUI
 {
@@ -392,9 +391,13 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
      * @param $form
      * @return bool
      */
-    private function validate($form)/*: bool*/
+    private function validate($form): bool
     {
         if($form->getInput("chart_type") === ""){
+            return false;
+        }
+
+        if(!is_numeric($form->getInput("chart_max_value"))){
             return false;
         }
 
@@ -491,10 +494,6 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $form->setDescription($this->getPlugin()->txt(self::LANG_DESCRIPTION));
         // Get Properties
         $prop = $this->getProperties();
-
-        /*$titleChart = new ilHiddenInputGUI("chart_title");
-        $titleChart->setValue($prop["chart_title"]);
-        $form->addItem($titleChart);*/
 
         $titleChart = new ilTextInputGUI($this->getPlugin()->txt(self::LANG_CHART_TITLE), "chart_title");
         $titleChart->setRequired(false);
