@@ -33,14 +33,6 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
         $tools = [];
         $plugin = new \ilChartPlugin();
 
-        /*var_dump("PLUGINID:" . $plugin->getId());
-        var_dump("CMDCLASS: " . $DIC->ctrl()->getCmdClass());
-        var_dump("CMD: " . $DIC->ctrl()->getCmd());*/
-
-
-
-        //var_dump($DIC->copage()->internal()->data());
-
         if(($plugin->getId() === 'chrt' && ($DIC->ctrl()->getCmdClass() === 'ilchartplugingui' || $DIC->ctrl()->getCmdClass() === 'ilpcpluggedgui') && ($DIC->ctrl()->getCmd() === 'edit' || $DIC->ctrl()->getCmd() === 'insert' || $DIC->ctrl()->getCmd() === 'create'))) {
 
             $title = $this->dic->language()->txt('editor');
