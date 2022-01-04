@@ -69,11 +69,11 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
 
         $form = new \ilPropertyFormGUI();
 
-        $titleChart = new \ilTextInputGUI($pl->txt(self::LANG_CHART_TITLE), "chart_title_slate");
+        /*$titleChart = new \ilTextInputGUI($pl->txt(self::LANG_CHART_TITLE), "chart_title_slate");
         $titleChart->setRequired(false);
-        $form->addItem($titleChart);
+        $form->addItem($titleChart);*/
 
-        $selectChartType = new \ilSelectInputGUI($pl->txt(self::LANG_CHART_TYPE), "chart_type_slate");
+        /*$selectChartType = new \ilSelectInputGUI($pl->txt(self::LANG_CHART_TYPE), "chart_type_slate");
         $selectChartType->setRequired(true);
         $optionsChart = [
             "1" => $pl->txt(self::LANG_CHART_HORIZONTAL_BAR),
@@ -83,14 +83,14 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
         ];
         $selectChartType->setOptions($optionsChart);
         $selectChartType->setValue("1");
-        $form->addItem($selectChartType);
+        $form->addItem($selectChartType);*/
 
-        $maxValueChart = new \ilTextInputGUI($pl->txt(self::MAX_VALUE_CHART), "chart_max_value_slate");
+        /*$maxValueChart = new \ilTextInputGUI($pl->txt(self::MAX_VALUE_CHART), "chart_max_value_slate");
         $maxValueChart->setRequired(false);
-        $form->addItem($maxValueChart);
+        $form->addItem($maxValueChart);*/
 
         // Radio buttons for data format
-        $radioGroup = new \ilRadioGroupInputGUI("Format", "data_format_slate");
+        /*$radioGroup = new \ilRadioGroupInputGUI("Format", "data_format_slate");
         $radioGroup->setValue("1");
         $radioGroup->setRequired(true);
 
@@ -103,7 +103,7 @@ class ToolProvider extends AbstractDynamicToolPluginProvider
 
         $radioPercent = new \ilRadioOption($pl->txt("percent"), "2");
         $radioGroup->addOption($radioPercent);
-        $form->addItem($radioGroup);
+        $form->addItem($radioGroup);*/
 
         return $form->getHTML();
     }

@@ -43,14 +43,14 @@ class ilChartPlugin extends ilPageComponentPlugin
         /*$next_class = $DIC->ctrl()->getNextClass();
         var_dump($next_class);*/
 
-        var_dump($this->getId());
-        var_dump($this->getPageId());
+       /* var_dump($this->getId());
+        var_dump($this->getPageId());*/
 
         /*var_dump("Hier ID" . ilPageContent::getHierId());*/
 
-        $referencePageId = $DIC->globalScreen()->tool()->context()->availableContexts()->repository()->getReferenceId()->toObjectId()->toInt();
+        /*$referencePageId = $DIC->globalScreen()->tool()->context()->availableContexts()->repository()->getReferenceId()->toObjectId()->toInt();
 
-        var_dump("REFERENCE_ID" . $referencePageId);
+        var_dump("REFERENCE_ID" . $referencePageId);*/
         //die;
 
         //$test = new ilPageEditorGUI(ilPageContent::class);
@@ -65,7 +65,7 @@ class ilChartPlugin extends ilPageComponentPlugin
         var_dump("CMDCLASS: " . $DIC->ctrl()->getCmdClass());
         var_dump("CMD: " . $DIC->ctrl()->getCmd());*/
 
-        $this->provider_collection->setToolProvider(new ToolProvider($DIC, $this));
+        //$this->provider_collection->setToolProvider(new ToolProvider($DIC, $this));
     }
 
     /**

@@ -1,4 +1,4 @@
-window.onload = function() {
+/*window.onload = function() {
 
     let containers = ['il_prop_cont_chart_title_slate', 'il_prop_cont_chart_type_slate', 'il_prop_cont_data_format_slate', 'il_prop_cont_currency_symbol_slate', 'il_prop_cont_chart_max_value_slate'];
 
@@ -56,9 +56,9 @@ window.onload = function() {
     document.getElementById('currency_symbol_slate').addEventListener("keyup", function(){
         document.getElementById('currency_symbol').value = getValue(document.getElementById('currency_symbol_slate'));
     });
-};
+};*/
 
-function textAlign(sel, position) {
+/*function textAlign(sel, position) {
     sel.style.textAlign = position;
 }
 
@@ -77,4 +77,4 @@ function setValue(selSlate, selGUI)  {
 
 function setChecked(selSlate, checked)  {
     selSlate.setAttribute('checked', checked);
-}
+}*/

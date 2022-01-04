@@ -26,6 +26,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
     const TAB_STYLE_DATASETS = "style-datasets";
     const TAB_DATASETS = "datasets";
     const LANG_DESCRIPTION = "description";
+    const LANG_DESCRIPTION_DATASETS = "description_datasets";
     const LANG_DESCRIPTION_STYLE = "description_style";
     const LANG_CHART = "chart";
     const LANG_CHART_TITLE = "chart_title";
@@ -42,6 +43,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
     const CANVAS_ID_PREFIX = "chart_page_component_";
     const DIV_CANVAS_ID_PREFIX = "div_canvas_";
     const DIV_ID_PREFIX = "chart_div_";
+    const MAX_VALUE_CHART = "max_value_chart";
 
     private $editorIsActive = false;
 
@@ -275,7 +277,6 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
                     $color = $extendedColors[rand(0, count($extendedColors)-1)];
                     $propertiesCategoriesColorsTmp["color_category_".$i] = $color;
                 }
-
             }
 
             $countColorsDatasets = count($form->getInput("datasets"));
@@ -485,35 +486,57 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
 
         $form = new ilPropertyFormGUI();
         // Add Title
-        $form->setTitle($this->getPlugin()->txt(self::LANG_CHART));
+        $form->setTitle($this->getPlugin()->txt("edit"));
         // Add Description
         $form->setDescription($this->getPlugin()->txt(self::LANG_DESCRIPTION));
         // Get Properties
         $prop = $this->getProperties();
 
-        $titleChart = new ilHiddenInputGUI("chart_title");
+        /*$titleChart = new ilHiddenInputGUI("chart_title");
+        $titleChart->setValue($prop["chart_title"]);
+        $form->addItem($titleChart);*/
+
+        $titleChart = new ilTextInputGUI($this->getPlugin()->txt(self::LANG_CHART_TITLE), "chart_title");
+        $titleChart->setRequired(false);
         $titleChart->setValue($prop["chart_title"]);
         $form->addItem($titleChart);
 
-        $titleChart = new ilHiddenInputGUI("chart_type");
-        $titleChart->setValue($prop["chart_type"]);
-        $form->addItem($titleChart);
+        $selectChartType = new ilSelectInputGUI($this->getPlugin()->txt(self::LANG_CHART_TYPE), "chart_type");
+        $selectChartType->setRequired(true);
+        $optionsChart = [
+            "1" => $this->getPlugin()->txt(self::LANG_CHART_HORIZONTAL_BAR),
+            "2" => $this->getPlugin()->txt(self::LANG_CHART_VERTICAL_BAR),
+            "3" => $this->getPlugin()->txt(self::LANG_CHART_PIE_CHART),
+            "4" => $this->getPlugin()->txt(self::LANG_CHART_LINE_CHART)
+        ];
+        $selectChartType->setOptions($optionsChart);
+        $selectChartType->setValue($prop["chart_type"]);
+        $form->addItem($selectChartType);
 
-        $maxValueChart = new ilHiddenInputGUI("chart_max_value");
+        $maxValueChart = new ilTextInputGUI($this->getPlugin()->txt(self::MAX_VALUE_CHART), "chart_max_value");
+        $maxValueChart->setRequired(false);
         $maxValueChart->setValue($prop["chart_max_value"]);
         $form->addItem($maxValueChart);
 
-        $titleChart = new ilHiddenInputGUI("data_format");
-        $titleChart->setValue($prop["data_format"]);
-        $form->addItem($titleChart);
+        $radioGroup = new ilRadioGroupInputGUI("Format", "data_format");
+        $radioGroup->setValue($prop["data_format"]);
+        $radioGroup->setRequired(true);
 
-        $titleChart = new ilHiddenInputGUI("currency_symbol");
-        $titleChart->setValue($prop["currency_symbol"]);
-        $form->addItem($titleChart);
+        // Radio button for data format number with suditem for currency symbol
+        $radioNumber = new ilRadioOption($this->getPlugin()->txt("number"), "1");
+        $currencySymbol = new ilTextInputGUI("Symbol", "currency_symbol");
+        $currencySymbol->setInfo($this->getPlugin()->txt('add_currency_symbol'));
+        $currencySymbol->setValue($prop["currency_symbol"]);
+        $radioNumber->addSubItem($currencySymbol);
+        $radioGroup->addOption($radioNumber);
+
+        $radioPercent = new ilRadioOption($this->getPlugin()->txt("percent"), "2");
+        $radioGroup->addOption($radioPercent);
+        $form->addItem($radioGroup);
 
         $header = new ilFormSectionHeaderGUI();
         $header->setTitle($this->lng->txt('categories'));
-        //$header->setInfo($this->getPlugin()->txt("categories_info"));
+        $header->setInfo($this->getPlugin()->txt("categories_info"));
         $form->addItem($header);
 
         $countCategory = $this->getCountPropertiesByType($prop, 'title_category');
@@ -540,6 +563,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
 
         $header = new ilFormSectionHeaderGUI();
         $header->setTitle($this->getPlugin()->txt('datasets'));
+        $header->setInfo($this->getPlugin()->txt("datasets_info"));
         $form->addItem($header);
 
         $countDataset = $this->getCountPropertiesByType($prop, 'title_dataset');
@@ -574,18 +598,6 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         return $form;
     }
 
-    public function getLink()
-    {
-        global $DIC;
-
-        $link = $DIC->ctrl()->getLinkTargetByClass(
-            [\ilUIPluginRouterGUI::class, self::class],
-            "testAjax"
-        );
-
-        return $link;
-    }
-
     /**
      * Style Form
      *
@@ -599,15 +611,14 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
 
         $form = new ilPropertyFormGUI();
         // Add Title
-        $form->setTitle($this->getPlugin()->txt("edit_style"));
-        // Add Description
-        $form->setDescription($this->getPlugin()->txt(self::LANG_DESCRIPTION_STYLE));
+        $form->setTitle($this->getPlugin()->txt("edit"));
+        $form->setDescription($this->getPlugin()->txt("edit_style"));
         // Get Properties
         $prop = $this->getProperties();
 
         $header = new ilFormSectionHeaderGUI();
         $header->setTitle($this->getPlugin()->txt("categories"));
-        $header->setInfo($this->getPlugin()->txt(self::LANG_DESCRIPTION_STYLE));
+        $header->setInfo($this->getPlugin()->txt("description_style_categories"));
         $form->addItem($header);
 
         $countColorsCategory = 0;
@@ -632,7 +643,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
 
         $header = new ilFormSectionHeaderGUI();
         $header->setTitle($this->getPlugin()->txt("datasets"));
-        $header->setInfo($this->getPlugin()->txt(self::LANG_DESCRIPTION_STYLE));
+        $header->setInfo($this->getPlugin()->txt("description_style_datasets"));
         $form->addItem($header);
 
         $countColorsDataset = 0;
@@ -671,13 +682,16 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
 
         $form = new ilPropertyFormGUI();
 
+        $form->setDescription($this->getPlugin()->txt(self::LANG_DESCRIPTION_DATASETS));
+
         // Add Title
-        $form->setTitle($this->getPlugin()->txt("edit_datasets"));
+        $form->setTitle($this->getPlugin()->txt("edit"));
         // Get Properties
         $prop = $this->getProperties();
 
         $header = new ilFormSectionHeaderGUI();
-        $header->setTitle($this->getPlugin()->txt("datasets"));
+        $header->setTitle($this->getPlugin()->txt("values"));
+        $header->setInfo($this->getPlugin()->txt(self::LANG_DESCRIPTION_DATASETS));
         $form->addItem($header);
 
         $countCategories = 0;
