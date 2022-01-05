@@ -397,7 +397,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
             return false;
         }
 
-        if(!is_numeric($form->getInput("chart_max_value"))){
+        if(!is_numeric($form->getInput("chart_max_value")) && $form->getInput("chart_max_value") !== ''){
             return false;
         }
 
