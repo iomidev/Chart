@@ -104,8 +104,6 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $this->setTabs(self::TAB_CHART, false);
         $form = $this->initFormChart(self::ACTION_INSERT);
         $tpl->setContent($form->getHTML());
-        $tpl->addJavaScript("./Customizing/global/plugins/Services/COPage/PageComponent/Chart/js/editor.js");
-        $tpl->addCss("./Customizing/global/plugins/Services/COPage/PageComponent/Chart/css/editor.css");
     }
 
     /**
@@ -205,8 +203,6 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $this->setTabs(self::TAB_CHART, true);
         $form = $this->initFormChart(self::ACTION_EDIT);
         $tpl->setContent($form->getHTML());
-        $tpl->addJavaScript("./Customizing/global/plugins/Services/COPage/PageComponent/Chart/js/editor.js");
-        $tpl->addCss("./Customizing/global/plugins/Services/COPage/PageComponent/Chart/css/editor.css");
     }
 
     /**
@@ -354,14 +350,20 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         global $DIC;
 
         $form = $this->initFormDatasetsEdit();
-        if ($form->checkInput()) {
-            $properties = $this->getProperties();
 
+        if ($form->checkInput()) {
+
+            $properties = $this->getProperties();
             $countDatasets = $this->getCountPropertiesByType($properties, "title_dataset");
             $countCategory = $this->getCountPropertiesByType($properties, "title_category");
 
             for ($i = 0; $i < $countCategory; $i++) {
                 for ($j = 0; $j < $countDatasets; $j++) {
+
+                    if($form->getInput("dataset_" . ($j+1). "_category_".($i+1)) === '' || !is_numeric($form->getInput("dataset_" . ($j+1). "_category_".($i+1)))){
+                        ilUtil::sendFailure($DIC->language()->txt("form_input_not_valid"), true);
+                        $DIC->ctrl()->redirect($this, self::CMD_EDIT_DATASETS);
+                    }
                     $properties["value_dataset_" . ($j+1). "_category_".($i+1)] = $form->getInput("dataset_" . ($j+1). "_category_".($i+1));
                 }
             }
@@ -534,7 +536,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $form->addItem($radioGroup);
 
         $header = new ilFormSectionHeaderGUI();
-        $header->setTitle($this->lng->txt('categories'));
+        $header->setTitle($this->getPlugin()->txt('categories_names'));
         $header->setInfo($this->getPlugin()->txt("categories_info"));
         $form->addItem($header);
 
@@ -561,7 +563,7 @@ class ilChartPluginGUI extends ilPageComponentPluginGUI
         $form->addItem($category);
 
         $header = new ilFormSectionHeaderGUI();
-        $header->setTitle($this->getPlugin()->txt('datasets'));
+        $header->setTitle($this->getPlugin()->txt('datasets_names'));
         $header->setInfo($this->getPlugin()->txt("datasets_info"));
         $form->addItem($header);
 

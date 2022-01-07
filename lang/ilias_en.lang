@@ -3,8 +3,10 @@ cmd_insert#:#Insert Chart
 chart#:#Chart
 chart_style#:#Style
 categories#:#Categories
+categories_names#:#Categories Names
 chart_datasets#:#Datasets
 datasets#:#Datasets
+datasets_names#:#Datasets Names
 dataset#:#Dataset
 description#:#Insert the title, type, data format and max value of the chart. If you have selected "Percent" as the data format, the calculation of the values will be displayed in percent. After inserting, you have the option of selecting colors
 description_datasets#:#Insert the values of datasets for every category

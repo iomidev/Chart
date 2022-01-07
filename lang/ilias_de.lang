@@ -4,7 +4,9 @@ chart#:#Diagramm
 chart_style#:#Style
 chart_datasets#:#Datasets
 categories#:#Kategorien
+categories_names#:#Kategorienamen
 datasets#:#Datasets
+datasets_names#:#Datasetsnamen
 dataset#:#Dataset
 description#:#Geben Sie den Diagrammtitel, den Diagrammtyp, das Datenformat und die Max Wert ein. Sollten Sie als Datenformat "Prozent" ausgewählt haben, wird die Berechnung der Werte in Prozent ausgegeben. Nach dem Einfügen haben Sie die Möglichkeit, die Datensets Werte auszufüllen und die Farben auszuwählen
 description_categories#:#Geben Sie die Kategorienamen udn die Datasetsnamen
